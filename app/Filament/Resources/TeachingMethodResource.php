@@ -20,6 +20,12 @@ class TeachingMethodResource extends Resource
     protected static ?string $navigationLabel = '教學方式';
     protected static ?string $navigationGroup = '課程管理';
 
+    protected static ?string $modelLabel = '教學方式';
+
+    protected static ?string $pluralModelLabel = '教學方式';
+
+    protected static ?int $navigationSort = 2;
+
     public static function form(Form $form): Form
     {
         return $form

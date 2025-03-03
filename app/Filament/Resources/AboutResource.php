@@ -20,6 +20,12 @@ class AboutResource extends Resource
     protected static ?string $navigationLabel = '關於';
     protected static ?string $navigationGroup = '網站內容';
 
+    protected static ?string $modelLabel = '關於';
+
+    protected static ?string $pluralModelLabel = '關於';
+
+    protected static ?int $navigationSort = 1;
+
     public static function form(Form $form): Form
     {
         return $form
