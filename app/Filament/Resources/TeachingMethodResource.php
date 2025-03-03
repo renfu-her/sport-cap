@@ -31,9 +31,14 @@ class TeachingMethodResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('user_id')
+                Forms\Components\Select::make('teacher_id')
                     ->label('講師')
-                    ->relationship('user', 'name')
+                    ->relationship('teacher', 'title')
+                    ->options(function () {
+                        return \App\Models\About::teachers()
+                            ->pluck('title', 'id')
+                            ->toArray();
+                    })
                     ->required(),
                 Forms\Components\Select::make('type')
                     ->label('類型')
@@ -113,7 +118,7 @@ class TeachingMethodResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user.name')
+                Tables\Columns\TextColumn::make('teacher.title')
                     ->label('講師')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('type')

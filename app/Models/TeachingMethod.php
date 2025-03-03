@@ -11,7 +11,7 @@ class TeachingMethod extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
+        'teacher_id',
         'type',
         'title',
         'description',
@@ -33,8 +33,8 @@ class TeachingMethod extends Model
         'is_active' => 'boolean',
     ];
 
-    public function user(): BelongsTo
+    public function teacher(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(About::class, 'teacher_id');
     }
 }
