@@ -10,6 +10,9 @@ return [
 
         'records_per_page' => [
             'label' => '每頁顯示',
+            'options' => [
+                'all' => '全部',
+            ],
         ],
 
     ],
