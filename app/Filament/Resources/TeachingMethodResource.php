@@ -103,10 +103,6 @@ class TeachingMethodResource extends Resource
                 Forms\Components\TextInput::make('location')
                     ->label('地點')
                     ->maxLength(255),
-                Forms\Components\Toggle::make('members_only')
-                    ->label('僅會員')
-                    ->default(false)
-                    ->inline(false),
                 Forms\Components\Toggle::make('is_active')
                     ->label('啟用')
                     ->default(true)
@@ -118,6 +114,17 @@ class TeachingMethodResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\ImageColumn::make('images')
+                    ->label('圖片')
+                    ->circular(false)
+                    ->stacked()
+                    ->limit(1)
+                    ->limitedRemainingText()
+                    ->extraImgAttributes(['class' => 'object-cover'])
+                    ->extraAttributes(['class' => 'flex justify-center'])
+                    ->height(80)
+                    ->width(80),
+
                 Tables\Columns\TextColumn::make('teacher.title')
                     ->label('講師')
                     ->searchable(),
@@ -135,12 +142,6 @@ class TeachingMethodResource extends Resource
                 Tables\Columns\TextColumn::make('price')
                     ->label('價格')
                     ->money('TWD'),
-                Tables\Columns\TextColumn::make('location')
-                    ->label('地點'),
-                Tables\Columns\IconColumn::make('members_only')
-                    ->label('僅會員')
-                    ->boolean()
-                    ->color(fn(string $state): string => $state ? 'success' : 'danger'),
                 Tables\Columns\IconColumn::make('is_active')
                     ->label('啟用')
                     ->boolean()
@@ -158,8 +159,6 @@ class TeachingMethodResource extends Resource
                         'group' => '團體課程',
                         'learning_record' => '學習記錄',
                     ]),
-                Tables\Filters\TernaryFilter::make('members_only')
-                    ->label('僅會員'),
                 Tables\Filters\TernaryFilter::make('is_active')
                     ->label('啟用狀態'),
             ])
