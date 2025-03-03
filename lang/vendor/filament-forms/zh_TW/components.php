@@ -225,5 +225,80 @@ return [
         ],
 
     ],
-
+    'file_upload' => [
+        'editor' => [
+            'fields' => [
+                'x_position' => [
+                    'label' => 'X 位置',
+                    'unit' => 'px',
+                ],
+                'y_position' => [
+                    'label' => 'Y 位置',
+                    'unit' => 'px',
+                ],
+                'width' => [
+                    'label' => '寬度',
+                    'unit' => 'px',
+                ],
+                'height' => [
+                    'label' => '高度',
+                    'unit' => 'px',
+                ],
+                'rotation' => [
+                    'label' => '旋轉',
+                    'unit' => '度',
+                ],
+            ],
+            'actions' => [
+                'drag_move' => [
+                    'label' => '拖動移動',
+                ],
+                'drag_crop' => [
+                    'label' => '拖動裁剪',
+                ],
+                'zoom_in' => [
+                    'label' => '放大',
+                ],
+                'zoom_out' => [
+                    'label' => '縮小',
+                ],
+                'zoom_100' => [
+                    'label' => '縮放 100%',
+                ],
+                'move_left' => [
+                    'label' => '向左移動',
+                ],
+                'move_right' => [
+                    'label' => '向右移動',
+                ],
+                'move_up' => [
+                    'label' => '向上移動',
+                ],
+                'move_down' => [
+                    'label' => '向下移動',
+                ],
+                'rotate_left' => [
+                    'label' => '向左旋轉',
+                ],
+                'rotate_right' => [
+                    'label' => '向右旋轉',
+                ],
+                'flip_horizontal' => [
+                    'label' => '水平翻轉',
+                ],
+                'flip_vertical' => [
+                    'label' => '垂直翻轉',
+                ],
+                'cancel' => [
+                    'label' => '取消',
+                ],
+                'reset' => [
+                    'label' => '重置',
+                ],
+                'save' => [
+                    'label' => '保存',
+                ],
+            ],
+        ],
+    ],
 ];

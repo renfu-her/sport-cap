@@ -9,9 +9,10 @@ use Filament\Tables;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use App\Filament\Resources\TeachingMethodResource\Pages;
-use Filament\Resources\Pages\CreateRecord;
-use Filament\Resources\Pages\EditRecord;
-use Filament\Resources\Pages\ListRecords;
+use Illuminate\Support\Str;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
+use Illuminate\Support\Facades\Storage;
 
 class TeachingMethodResource extends Resource
 {
@@ -56,9 +57,35 @@ class TeachingMethodResource extends Resource
                     ->label('圖片')
                     ->image()
                     ->multiple()
-                    ->disk('public')
+                    ->imageEditor()
                     ->directory('teaching-method-images')
-                    ->columnSpanFull(),
+                    ->columnSpanFull()
+                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                    ->downloadable()
+                    ->openable()
+                    ->getUploadedFileNameForStorageUsing(
+                        fn($file): string => (string) str(Str::uuid7() . '.webp')
+                    )
+                    ->saveUploadedFileUsing(function ($file) {
+                        $manager = new ImageManager(new Driver());
+                        $image = $manager->read($file);
+
+                        $image->scale(width: 1024);
+
+                        $filename = Str::uuid7()->toString() . '.webp';
+
+                        if (!file_exists(storage_path('app/public/teaching-method-images'))) {
+                            mkdir(storage_path('app/public/teaching-method-images'), 0755, true);
+                        }
+
+                        $image->toWebp(90)->save(storage_path('app/public/teaching-method-images/' . $filename));
+                        return 'teaching-method-images/' . $filename;
+                    })
+                    ->deleteUploadedFileUsing(function ($file) {
+                        if ($file) {
+                            Storage::disk('public')->delete($file);
+                        }
+                    }),
                 Forms\Components\DateTimePicker::make('start_date')
                     ->label('開始日期'),
                 Forms\Components\DateTimePicker::make('end_date')

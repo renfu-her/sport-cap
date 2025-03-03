@@ -9,9 +9,10 @@ use Filament\Tables;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use App\Filament\Resources\AboutResource\Pages;
-use Filament\Resources\Pages\CreateRecord;
-use Filament\Resources\Pages\EditRecord;
-use Filament\Resources\Pages\ListRecords;
+use Illuminate\Support\Str;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
+use Illuminate\Support\Facades\Storage;
 
 class AboutResource extends Resource
 {
@@ -53,9 +54,35 @@ class AboutResource extends Resource
                 Forms\Components\FileUpload::make('image')
                     ->label('圖片')
                     ->image()
-                    ->disk('public')
+                    ->imageEditor()
                     ->directory('about-images')
-                    ->columnSpanFull(),
+                    ->columnSpanFull()
+                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                    ->downloadable()
+                    ->openable()
+                    ->getUploadedFileNameForStorageUsing(
+                        fn($file): string => (string) str(Str::uuid7() . '.webp')
+                    )
+                    ->saveUploadedFileUsing(function ($file) {
+                        $manager = new ImageManager(new Driver());
+                        $image = $manager->read($file);
+
+                        $image->scale(width: 1024);
+
+                        $filename = Str::uuid7()->toString() . '.webp';
+
+                        if (!file_exists(storage_path('app/public/about-images'))) {
+                            mkdir(storage_path('app/public/about-images'), 0755, true);
+                        }
+
+                        $image->toWebp(90)->save(storage_path('app/public/about-images/' . $filename));
+                        return 'about-images/' . $filename;
+                    })
+                    ->deleteUploadedFileUsing(function ($file) {
+                        if ($file) {
+                            Storage::disk('public')->delete($file);
+                        }
+                    }),
                 Forms\Components\Toggle::make('is_active')
                     ->label('啟用')
                     ->inline(false)
