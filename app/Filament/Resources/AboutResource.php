@@ -47,15 +47,18 @@ class AboutResource extends Resource
                 Forms\Components\RichEditor::make('content')
                     ->label('內容')
                     ->required()
+                    ->columnSpanFull()
                     ->fileAttachmentsDisk('public')
                     ->fileAttachmentsDirectory('about-uploads'),
                 Forms\Components\FileUpload::make('image')
                     ->label('圖片')
                     ->image()
                     ->disk('public')
-                    ->directory('about-images'),
+                    ->directory('about-images')
+                    ->columnSpanFull(),
                 Forms\Components\Toggle::make('is_active')
                     ->label('啟用')
+                    ->inline(false)
                     ->default(true),
                 Forms\Components\TextInput::make('sort_order')
                     ->label('排序')
@@ -85,7 +88,8 @@ class AboutResource extends Resource
                     ->label('圖片'),
                 Tables\Columns\IconColumn::make('is_active')
                     ->label('啟用')
-                    ->boolean(),
+                    ->boolean()
+                    ->color(fn(string $state): string => $state ? 'success' : 'danger'),
                 Tables\Columns\TextColumn::make('sort_order')
                     ->label('排序'),
                 Tables\Columns\TextColumn::make('created_at')

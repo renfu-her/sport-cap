@@ -49,6 +49,7 @@ class TeachingMethodResource extends Resource
                 Forms\Components\RichEditor::make('description')
                     ->label('描述')
                     ->required()
+                    ->columnSpanFull()
                     ->fileAttachmentsDisk('public')
                     ->fileAttachmentsDirectory('teaching-method-uploads'),
                 Forms\Components\FileUpload::make('images')
@@ -56,7 +57,8 @@ class TeachingMethodResource extends Resource
                     ->image()
                     ->multiple()
                     ->disk('public')
-                    ->directory('teaching-method-images'),
+                    ->directory('teaching-method-images')
+                    ->columnSpanFull(),
                 Forms\Components\DateTimePicker::make('start_date')
                     ->label('開始日期'),
                 Forms\Components\DateTimePicker::make('end_date')
@@ -71,10 +73,12 @@ class TeachingMethodResource extends Resource
                     ->maxLength(255),
                 Forms\Components\Toggle::make('members_only')
                     ->label('僅會員')
-                    ->default(false),
+                    ->default(false)
+                    ->inline(false),
                 Forms\Components\Toggle::make('is_active')
                     ->label('啟用')
-                    ->default(true),
+                    ->default(true)
+                    ->inline(false),
             ]);
     }
 
@@ -103,10 +107,12 @@ class TeachingMethodResource extends Resource
                     ->label('地點'),
                 Tables\Columns\IconColumn::make('members_only')
                     ->label('僅會員')
-                    ->boolean(),
+                    ->boolean()
+                    ->color(fn(string $state): string => $state ? 'success' : 'danger'),
                 Tables\Columns\IconColumn::make('is_active')
                     ->label('啟用')
-                    ->boolean(),
+                    ->boolean()
+                    ->color(fn(string $state): string => $state ? 'success' : 'danger'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('建立時間')
                     ->dateTime('Y-m-d H:i')
