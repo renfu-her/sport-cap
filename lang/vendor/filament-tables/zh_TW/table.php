@@ -33,6 +33,8 @@ return [
 
     'filters' => [
 
+        'heading' => '篩選條件',
+
         'actions' => [
 
             'reset' => [
