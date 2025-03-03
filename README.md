@@ -9,3 +9,7 @@ php artisan migrate
 php artisan db:seed
 ```
 
+## 使用
+```
+php artisan serve
+```
