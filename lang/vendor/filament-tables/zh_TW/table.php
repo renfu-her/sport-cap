@@ -83,4 +83,8 @@ return [
 
     ],
 
+    'column_toggle' => [
+        'heading' => '顯示欄位',
+    ],
+
 ];
