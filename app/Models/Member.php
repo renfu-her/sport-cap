@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Member extends Model
 {
@@ -28,4 +29,12 @@ class Member extends Model
         'membership_end_date' => 'date',
         'is_active' => 'boolean',
     ];
+
+    /**
+     * 獲取此會員的所有學習記錄
+     */
+    public function learningRecords(): HasMany
+    {
+        return $this->hasMany(LearningRecord::class);
+    }
 }
