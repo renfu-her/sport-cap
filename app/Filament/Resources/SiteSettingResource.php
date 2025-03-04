@@ -16,6 +16,10 @@ use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Tabs;
 use Filament\Forms\Components\Tabs\Tab;
 use Filament\Forms\Components\FileUpload;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 
 class SiteSettingResource extends Resource
 {
@@ -73,51 +77,171 @@ class SiteSettingResource extends Resource
                                 FileUpload::make('site_logo')
                                     ->label('網站 Logo')
                                     ->image()
-                                    ->imageResizeMode('cover')
-                                    ->imageCropAspectRatio('16:9')
-                                    ->imageResizeTargetWidth('300')
-                                    ->imageResizeTargetHeight('100')
+                                    ->imageEditor()
                                     ->directory('site-settings')
+                                    ->columnSpanFull()
+                                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                                    ->downloadable()
+                                    ->openable()
+                                    ->getUploadedFileNameForStorageUsing(
+                                        fn($file): string => (string) str(Str::uuid7() . '.webp')
+                                    )
+                                    ->saveUploadedFileUsing(function ($file) {
+                                        $manager = new ImageManager(new Driver());
+                                        $image = $manager->read($file);
+
+                                        $image->scale(width: 300);
+
+                                        $filename = Str::uuid7()->toString() . '.webp';
+
+                                        if (!file_exists(storage_path('app/public/site-settings'))) {
+                                            mkdir(storage_path('app/public/site-settings'), 0755, true);
+                                        }
+
+                                        $image->toWebp(90)->save(storage_path('app/public/site-settings/' . $filename));
+                                        return 'site-settings/' . $filename;
+                                    })
+                                    ->deleteUploadedFileUsing(function ($file) {
+                                        if ($file) {
+                                            Storage::disk('public')->delete($file);
+                                        }
+                                    })
                                     ->helperText('建議尺寸：300x100 像素'),
 
                                 FileUpload::make('site_logo_dark')
                                     ->label('深色模式 Logo')
                                     ->image()
-                                    ->imageResizeMode('cover')
-                                    ->imageCropAspectRatio('16:9')
-                                    ->imageResizeTargetWidth('300')
-                                    ->imageResizeTargetHeight('100')
+                                    ->imageEditor()
                                     ->directory('site-settings')
+                                    ->columnSpanFull()
+                                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                                    ->downloadable()
+                                    ->openable()
+                                    ->getUploadedFileNameForStorageUsing(
+                                        fn($file): string => (string) str(Str::uuid7() . '.webp')
+                                    )
+                                    ->saveUploadedFileUsing(function ($file) {
+                                        $manager = new ImageManager(new Driver());
+                                        $image = $manager->read($file);
+
+                                        $image->scale(width: 300);
+
+                                        $filename = Str::uuid7()->toString() . '.webp';
+
+                                        if (!file_exists(storage_path('app/public/site-settings'))) {
+                                            mkdir(storage_path('app/public/site-settings'), 0755, true);
+                                        }
+
+                                        $image->toWebp(90)->save(storage_path('app/public/site-settings/' . $filename));
+                                        return 'site-settings/' . $filename;
+                                    })
+                                    ->deleteUploadedFileUsing(function ($file) {
+                                        if ($file) {
+                                            Storage::disk('public')->delete($file);
+                                        }
+                                    })
                                     ->helperText('建議尺寸：300x100 像素'),
 
                                 FileUpload::make('site_favicon')
                                     ->label('網站 Favicon')
                                     ->image()
-                                    ->imageResizeMode('cover')
-                                    ->imageCropAspectRatio('1:1')
-                                    ->imageResizeTargetWidth('32')
-                                    ->imageResizeTargetHeight('32')
+                                    ->imageEditor()
                                     ->directory('site-settings')
+                                    ->columnSpanFull()
+                                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/x-icon'])
+                                    ->downloadable()
+                                    ->openable()
+                                    ->getUploadedFileNameForStorageUsing(
+                                        fn($file): string => (string) str(Str::uuid7() . '.webp')
+                                    )
+                                    ->saveUploadedFileUsing(function ($file) {
+                                        $manager = new ImageManager(new Driver());
+                                        $image = $manager->read($file);
+
+                                        $image->resize(32, 32);
+
+                                        $filename = Str::uuid7()->toString() . '.webp';
+
+                                        if (!file_exists(storage_path('app/public/site-settings'))) {
+                                            mkdir(storage_path('app/public/site-settings'), 0755, true);
+                                        }
+
+                                        $image->toWebp(90)->save(storage_path('app/public/site-settings/' . $filename));
+                                        return 'site-settings/' . $filename;
+                                    })
+                                    ->deleteUploadedFileUsing(function ($file) {
+                                        if ($file) {
+                                            Storage::disk('public')->delete($file);
+                                        }
+                                    })
                                     ->helperText('建議尺寸：32x32 像素'),
 
                                 FileUpload::make('site_og_image')
                                     ->label('Open Graph 圖片')
                                     ->image()
-                                    ->imageResizeMode('cover')
-                                    ->imageCropAspectRatio('16:9')
-                                    ->imageResizeTargetWidth('1200')
-                                    ->imageResizeTargetHeight('630')
+                                    ->imageEditor()
                                     ->directory('site-settings')
+                                    ->columnSpanFull()
+                                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                                    ->downloadable()
+                                    ->openable()
+                                    ->getUploadedFileNameForStorageUsing(
+                                        fn($file): string => (string) str(Str::uuid7() . '.webp')
+                                    )
+                                    ->saveUploadedFileUsing(function ($file) {
+                                        $manager = new ImageManager(new Driver());
+                                        $image = $manager->read($file);
+
+                                        $image->resize(1200, 630);
+
+                                        $filename = Str::uuid7()->toString() . '.webp';
+
+                                        if (!file_exists(storage_path('app/public/site-settings'))) {
+                                            mkdir(storage_path('app/public/site-settings'), 0755, true);
+                                        }
+
+                                        $image->toWebp(90)->save(storage_path('app/public/site-settings/' . $filename));
+                                        return 'site-settings/' . $filename;
+                                    })
+                                    ->deleteUploadedFileUsing(function ($file) {
+                                        if ($file) {
+                                            Storage::disk('public')->delete($file);
+                                        }
+                                    })
                                     ->helperText('建議尺寸：1200x630 像素'),
 
                                 FileUpload::make('site_twitter_image')
                                     ->label('Twitter 圖片')
                                     ->image()
-                                    ->imageResizeMode('cover')
-                                    ->imageCropAspectRatio('16:9')
-                                    ->imageResizeTargetWidth('1200')
-                                    ->imageResizeTargetHeight('630')
+                                    ->imageEditor()
                                     ->directory('site-settings')
+                                    ->columnSpanFull()
+                                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                                    ->downloadable()
+                                    ->openable()
+                                    ->getUploadedFileNameForStorageUsing(
+                                        fn($file): string => (string) str(Str::uuid7() . '.webp')
+                                    )
+                                    ->saveUploadedFileUsing(function ($file) {
+                                        $manager = new ImageManager(new Driver());
+                                        $image = $manager->read($file);
+
+                                        $image->resize(1200, 630);
+
+                                        $filename = Str::uuid7()->toString() . '.webp';
+
+                                        if (!file_exists(storage_path('app/public/site-settings'))) {
+                                            mkdir(storage_path('app/public/site-settings'), 0755, true);
+                                        }
+
+                                        $image->toWebp(90)->save(storage_path('app/public/site-settings/' . $filename));
+                                        return 'site-settings/' . $filename;
+                                    })
+                                    ->deleteUploadedFileUsing(function ($file) {
+                                        if ($file) {
+                                            Storage::disk('public')->delete($file);
+                                        }
+                                    })
                                     ->helperText('建議尺寸：1200x630 像素'),
                             ])
                             ->columns(2),
