@@ -1,5 +1,9 @@
 <?php
 
+use Illuminate\Support\ServiceProvider;
+use App\Providers\AppServiceProvider;
+use App\Providers\SiteSettingServiceProvider;
+
 return [
 
     /*
@@ -122,5 +126,18 @@ return [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
+
+    'providers' => ServiceProvider::defaultProviders()->merge([
+        /*
+         * Package Service Providers...
+         */
+
+        /*
+         * Application Service Providers...
+         */
+        AppServiceProvider::class,
+        // App\Providers\BroadcastServiceProvider::class,
+        SiteSettingServiceProvider::class,
+    ])->toArray(),
 
 ];

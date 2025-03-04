@@ -86,4 +86,49 @@ return [
 
     'livewire_loading_delay' => 'default',
 
+    /*
+    |--------------------------------------------------------------------------
+    | Brand Name
+    |--------------------------------------------------------------------------
+    |
+    | This will be displayed on the login page and in the top left corner of
+    | your admin panel.
+    |
+    */
+
+    'brand' => env('APP_NAME', '全球高爾夫管家'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Meta Description
+    |--------------------------------------------------------------------------
+    |
+    | This will be used as the default meta description of your application.
+    |
+    */
+
+    'meta_description' => '全球高爾夫管家提供專業的賽事團、國外移地訓練團和管家服務，為高爾夫愛好者提供全方位的支持。',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Meta Keywords
+    |--------------------------------------------------------------------------
+    |
+    | This will be used as the default meta keywords of your application.
+    |
+    */
+
+    'meta_keywords' => '高爾夫,賽事,訓練,管家服務,球袋運送,電商,行程規劃',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Meta Author
+    |--------------------------------------------------------------------------
+    |
+    | This will be used as the default meta author of your application.
+    |
+    */
+
+    'meta_author' => '全球高爾夫管家團隊',
+
 ];

@@ -7,6 +7,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// 測試網站設定
+Route::get('/test-settings', function () {
+    return view('test-settings');
+});
+
 // 添加登入後重定向到 abouts 頁面的路由
 Route::get('/backend', function () {
     return redirect('/backend/abouts');
