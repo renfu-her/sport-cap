@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\TeachingMethod;
+use App\Models\SiteSetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -100,21 +101,18 @@ class OrderController extends Controller
             ], 404);
         }
 
-        // 計算價格和稅金
-        $price = $teachingMethod->price;
-        $tax = $price * 0.05; // 假設稅率為 5%
-        $subTotal = $price;
-        $total = $subTotal + $tax;
+        // 使用 SiteSetting 計算價格和稅金
+        $priceData = SiteSetting::calculateTax($teachingMethod->price);
 
         // 創建訂單
         $order = Order::create([
             'member_id' => session('member_id'),
             'teaching_method_id' => $request->teaching_method_id,
             'order_number' => Order::generateOrderNumber(),
-            'price' => $price,
-            'tax' => $tax,
-            'sub_total' => $subTotal,
-            'total' => $total,
+            'price' => $priceData['price'],
+            'tax' => $priceData['tax'],
+            'sub_total' => $priceData['sub_total'],
+            'total' => $priceData['total'],
             'status' => 'pending',
             'payment_method' => $request->payment_method,
             'payment_status' => 'pending',

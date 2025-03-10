@@ -329,6 +329,38 @@ class SiteSettingResource extends Resource
                                     ->rows(10),
                             ])
                             ->columns(2),
+
+                        Tab::make('稅金設定')
+                            ->schema([
+                                Forms\Components\Select::make('tax_type')
+                                    ->label('稅金類型')
+                                    ->options([
+                                        'included' => '內含稅金',
+                                        'excluded' => '另計稅金',
+                                    ])
+                                    ->default('excluded')
+                                    ->required()
+                                    ->helperText('內含稅金：顯示的價格已包含稅金；另計稅金：顯示的價格不包含稅金，結帳時另計'),
+
+                                Forms\Components\TextInput::make('tax_rate')
+                                    ->label('稅率（%）')
+                                    ->numeric()
+                                    ->default(5)
+                                    ->required()
+                                    ->minValue(0)
+                                    ->maxValue(100)
+                                    ->step(0.01)
+                                    ->helperText('稅率百分比，例如：5 表示 5%'),
+
+                                Forms\Components\TextInput::make('max_price_no_tax')
+                                    ->label('最高免稅價格')
+                                    ->numeric()
+                                    ->default(0)
+                                    ->required()
+                                    ->minValue(0)
+                                    ->step(0.01)
+                                    ->helperText('當價格超過此金額時不收稅，設為 0 表示不啟用此功能'),
+                            ]),
                     ])
                     ->columnSpanFull(),
             ]);

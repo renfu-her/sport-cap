@@ -6,6 +6,7 @@ use App\Filament\Resources\OrderResource\Pages;
 use App\Models\Order;
 use App\Models\Member;
 use App\Models\TeachingMethod;
+use App\Models\SiteSetting;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -60,12 +61,12 @@ class OrderResource extends Resource
                                 if ($state) {
                                     $teachingMethod = TeachingMethod::find($state);
                                     if ($teachingMethod) {
-                                        $price = $teachingMethod->price;
-                                        $set('price', $price);
-                                        $set('sub_total', $price);
-                                        $tax = $price * 0.05; // 假設稅率為 5%
-                                        $set('tax', $tax);
-                                        $set('total', $price + $tax);
+                                        // 使用 SiteSetting 計算價格和稅金
+                                        $priceData = SiteSetting::calculateTax($teachingMethod->price);
+                                        $set('price', $priceData['price']);
+                                        $set('tax', $priceData['tax']);
+                                        $set('sub_total', $priceData['sub_total']);
+                                        $set('total', $priceData['total']);
                                     }
                                 }
                             }),
