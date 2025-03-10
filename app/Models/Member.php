@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Hash;
 
 class Member extends Model
 {
@@ -13,6 +14,7 @@ class Member extends Model
     protected $fillable = [
         'name',
         'email',
+        'password',
         'phone',
         'birthday',
         'address',
@@ -21,6 +23,10 @@ class Member extends Model
         'membership_end_date',
         'notes',
         'is_active',
+    ];
+
+    protected $hidden = [
+        'password',
     ];
 
     protected $casts = [
@@ -36,5 +42,23 @@ class Member extends Model
     public function learningRecords(): HasMany
     {
         return $this->hasMany(LearningRecord::class);
+    }
+
+    /**
+     * 獲取此會員的所有訂單
+     */
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    /**
+     * 設置密碼時自動進行雜湊處理
+     */
+    public function setPasswordAttribute($value)
+    {
+        if ($value) {
+            $this->attributes['password'] = Hash::make($value);
+        }
     }
 }

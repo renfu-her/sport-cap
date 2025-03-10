@@ -61,6 +61,16 @@ class MemberResource extends Resource
                                         ->send();
                                 }
                             }),
+                        Forms\Components\TextInput::make('password')
+                            ->label('密碼')
+                            ->password()
+                            ->dehydrated(fn ($state) => filled($state))
+                            ->required(fn (string $context): bool => $context === 'create')
+                            ->minLength(8)
+                            ->maxLength(255)
+                            ->validationMessages([
+                                'min' => '密碼長度至少為 8 個字符。',
+                            ]),
                         Forms\Components\TextInput::make('phone')
                             ->label('電話')
                             ->tel()

@@ -195,4 +195,114 @@ class MemberController extends Controller
 
         return base64_encode(json_encode($payload));
     }
+
+    /**
+     * 會員註冊
+     */
+    public function register(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:members,email|max:255',
+            'password' => 'required|string|min:8|max:255',
+            'phone' => 'nullable|string|max:20',
+            'birthday' => 'nullable|date',
+            'address' => 'nullable|string|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => '驗證失敗',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        // 創建會員
+        $member = Member::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password, // 密碼會自動進行雜湊處理
+            'phone' => $request->phone,
+            'birthday' => $request->birthday,
+            'address' => $request->address,
+            'membership_type' => 'basic', // 預設為基本會員
+            'is_active' => true,
+        ]);
+
+        // 創建 token
+        $token = $this->generateToken($member);
+
+        // 儲存到 session
+        session(['member_token' => $token]);
+        session(['member_id' => $member->id]);
+        session(['member_name' => $member->name]);
+        session(['member_email' => $member->email]);
+
+        return response()->json([
+            'success' => true,
+            'message' => '註冊成功',
+            'data' => [
+                'token' => $token,
+                'member' => [
+                    'id' => $member->id,
+                    'name' => $member->name,
+                    'email' => $member->email,
+                ]
+            ]
+        ], 201);
+    }
+
+    /**
+     * 更新會員密碼
+     */
+    public function updatePassword(Request $request)
+    {
+        // 檢查 session 中是否有會員資料
+        if (!session('member_id')) {
+            return response()->json([
+                'success' => false,
+                'message' => '未登入'
+            ], 401);
+        }
+
+        $member = Member::find(session('member_id'));
+
+        if (!$member) {
+            return response()->json([
+                'success' => false,
+                'message' => '會員不存在'
+            ], 404);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'current_password' => 'required|string',
+            'new_password' => 'required|string|min:8|max:255|different:current_password',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => '驗證失敗',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        // 驗證當前密碼
+        if (!Hash::check($request->current_password, $member->password)) {
+            return response()->json([
+                'success' => false,
+                'message' => '當前密碼不正確'
+            ], 401);
+        }
+
+        // 更新密碼
+        $member->password = $request->new_password;
+        $member->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => '密碼更新成功'
+        ]);
+    }
 } 

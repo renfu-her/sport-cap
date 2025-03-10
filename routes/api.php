@@ -23,10 +23,12 @@ use App\Http\Controllers\Api\ButlerServiceController;
 */
 
 // 會員相關
+Route::post('/register', [MemberController::class, 'register']);
 Route::post('/login', [MemberController::class, 'login']);
 Route::post('/logout', [MemberController::class, 'logout']);
 Route::get('/profile', [MemberController::class, 'profile']);
 Route::put('/profile', [MemberController::class, 'updateProfile']);
+Route::put('/password', [MemberController::class, 'updatePassword']);
 
 // 教學方式相關
 Route::get('/teaching-methods', [TeachingMethodController::class, 'index']);
