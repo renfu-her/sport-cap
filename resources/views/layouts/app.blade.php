@@ -50,9 +50,7 @@
         <!-- HEADER
         ================================================== -->
         <header class="header-style2">
-
             <div class="navbar-default">
-
                 <!-- start top search -->
                 <div class="top-search bg-primary">
                     <div class="container">
@@ -73,7 +71,6 @@
                         <div class="col-12 col-lg-12">
                             <div class="menu_area">
                                 <nav class="navbar navbar-expand-lg navbar-light p-0">
-
                                     <div class="navbar-header navbar-header-custom">
                                         <!-- start logo -->
                                         <a href="{{ url('/') }}" class="navbar-brand logodefault"><img id="logo" src="{{ asset('img/logos/logo.png') }}" alt="logo"></a>
@@ -89,31 +86,19 @@
                                             <a href="#!">關於我們</a>
                                             <ul>
                                                 <li><a href="{{ url('/about') }}">關於我們</a></li>
-                                                <li><a href="{{ url('/teaching-methods') }}">教學方式</a></li>
-                                                <li><a href="{{ url('/training-camps') }}">訓練營</a></li>
-                                                <li><a href="{{ url('/tournaments') }}">比賽</a></li>
-                                                <li><a href="{{ url('/butler-services') }}">管家服務</a></li>
+                                                <li><a href="{{ url('/team') }}">團隊成員</a></li>
+                                                <li><a href="{{ url('/faq') }}">常見問題</a></li>
                                             </ul>
                                         </li>
                                         <li>
-                                            <a href="#!">商店</a>
+                                            <a href="#!">課程</a>
                                             <ul>
-                                                <li><a href="{{ url('/shop') }}">所有商品</a></li>
-                                                <li><a href="{{ url('/shop/categories') }}">商品分類</a></li>
-                                                <li><a href="{{ url('/shop/categories/caps') }}">運動帽</a></li>
-                                                <li><a href="{{ url('/shop/categories/apparel') }}">運動服飾</a></li>
-                                                <li><a href="{{ url('/shop/categories/accessories') }}">運動配件</a></li>
+                                                <li><a href="{{ url('/coaching') }}">教練課程</a></li>
+                                                <li><a href="{{ url('/training') }}">訓練營</a></li>
+                                                <li><a href="{{ url('/membership') }}">會員制度</a></li>
                                             </ul>
                                         </li>
-                                        <li>
-                                            <a href="#!">會員服務</a>
-                                            <ul>
-                                                <li><a href="{{ url('/login') }}">會員登入</a></li>
-                                                <li><a href="{{ url('/register') }}">註冊會員</a></li>
-                                                <li><a href="{{ url('/cart') }}">購物車</a></li>
-                                                <li><a href="{{ url('/checkout') }}">結帳</a></li>
-                                            </ul>
-                                        </li>
+                                        <li><a href="{{ url('/shop') }}">商店</a></li>
                                         <li><a href="{{ url('/contact') }}">聯絡我們</a></li>
                                     </ul>
                                     <!-- end menu area -->
@@ -122,7 +107,7 @@
                                     <div class="attr-nav align-items-lg-center ms-lg-auto">
                                         <ul>
                                             <li class="search"><a href="#!"><i class="fas fa-search"></i></a></li>
-                                            <li class="d-none d-xl-inline-block"><a href="{{ url('/cart') }}" class="butn primary md text-white">購物車</a></li>
+                                            <li class="d-none d-xl-inline-block"><a href="{{ url('/membership') }}" class="butn primary md text-white">成為會員</a></li>
                                         </ul>
                                     </div>
                                     <!-- end attribute navigation -->
@@ -133,7 +118,6 @@
                     </div>
                 </div>
             </div>
-
         </header>
 
         @yield('content')
@@ -149,14 +133,14 @@
                                 <div class="mb-3 footer-logo">
                                     <img src="{{ asset('img/logos/footer-light-logo.png') }}" alt="...">
                                 </div>
-                                <p class="mb-3">Sport Cap 已成為知名的運動用品品牌，吸引來自世界各地的運動愛好者。</p>
+                                <p class="mb-3">運動班長已成為知名的運動用品品牌，吸引來自世界各地的運動愛好者。</p>
                                 <ul class="d-inline-block list-unstyled ps-0">
                                     <li class="align-middle d-inline-block me-3"><a href="#!"><i class="fab fa-facebook-f"></i></a></li>
                                     <li class="align-middle d-inline-block me-3"><a href="#!"><i class="fab fa-twitter"></i></a></li>
                                     <li class="align-middle d-inline-block me-3"><a href="#!"><i class="fab fa-youtube"></i></a></li>
                                     <li class="align-middle d-inline-block"><a href="#!"><i class="fab fa-linkedin-in"></i></a></li>
                                 </ul>
-                                <p class="mb-0 text-primary font-weight-600">&copy; <span class="current-year">{{ date('Y') }}</span> Sport Cap 版權所有</p>
+                                <p class="mb-0 text-primary font-weight-600">&copy; <span class="current-year">{{ date('Y') }}</span> 運動班長版權所有</p>
                             </div>
                         </div>
                     </div>
@@ -170,15 +154,15 @@
                                             <ul class="footer-list list-unstyled mb-0">
                                                 <li><a href="{{ url('/') }}">首頁</a></li>
                                                 <li><a href="{{ url('/about') }}">關於我們</a></li>
-                                                <li><a href="{{ url('/teaching-methods') }}">教學方式</a></li>
-                                                <li><a href="{{ url('/training-camps') }}">訓練營</a></li>
+                                                <li><a href="{{ url('/coaching') }}">教練課程</a></li>
+                                                <li><a href="{{ url('/training') }}">訓練營</a></li>
                                             </ul>
                                         </div>
                                         <div class="col-6">
                                             <ul class="footer-list list-unstyled mb-0">
                                                 <li><a href="{{ url('/shop') }}">商店</a></li>
-                                                <li><a href="{{ url('/tournaments') }}">比賽</a></li>
-                                                <li><a href="{{ url('/butler-services') }}">管家服務</a></li>
+                                                <li><a href="{{ url('/team') }}">團隊</a></li>
+                                                <li><a href="{{ url('/faq') }}">常見問題</a></li>
                                                 <li><a href="{{ url('/contact') }}">聯絡我們</a></li>
                                             </ul>
                                         </div>
@@ -208,7 +192,6 @@
                                         @csrf
                                         <div class="quform-elements">
                                             <div class="row">
-                                                <!-- Begin Text input element -->
                                                 <div class="col-md-12">
                                                     <div class="quform-element mb-0">
                                                         <div class="quform-input">
@@ -216,15 +199,11 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <!-- End Text input element -->
-
-                                                <!-- Begin Submit button -->
                                                 <div class="col-md-12">
                                                     <div class="quform-submit-inner">
                                                         <button class="btn btn-white text-primary m-0 px-2" type="submit"><i class="fas fa-paper-plane"></i></button>
                                                     </div>
                                                 </div>
-                                                <!-- End Submit button -->
                                             </div>
                                         </div>
                                     </form>
