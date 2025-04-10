@@ -39,6 +39,14 @@ class BackendPanelProvider extends PanelProvider
                 // 將 Dashboard 替換為 ListAbouts
                 // Pages\Dashboard::class,
             ])
+            ->navigationGroups([
+                '使用者管理',
+                '訂單管理',
+                '全球高爾夫管家',
+                '課程管理',
+                '教學管理',
+                '系統管理',
+            ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,

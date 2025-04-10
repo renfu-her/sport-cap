@@ -20,6 +20,8 @@ class MemberResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
+    protected static ?string $navigationGroup = '使用者管理';
+
     protected static ?string $navigationLabel = '會員管理';
 
     protected static ?string $modelLabel = '會員';
